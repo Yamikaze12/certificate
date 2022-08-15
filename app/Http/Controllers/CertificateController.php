@@ -15,7 +15,7 @@ class CertificateController extends Controller
     public function index()
     {
         $Certificate = Certificate::all();
-        return view('/resources.index', compact('Certificate'));
+        return view(route('certificates.index'), compact('Certificate'));
     }
 
     /**
@@ -65,10 +65,10 @@ class CertificateController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Certificate $certificate)
     {
-        $Certificate = Certificate::findOrFail($id);
-        return view('/resources.edit', compact('Certificate'));
+
+        return view('/resources.edit', compact('certificate'));
     }
 
     /**
