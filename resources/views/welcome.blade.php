@@ -84,7 +84,7 @@
                                             </div>
                                             <div class="col-md-12 form-group">
                                                 <label>Certificate No. <em>*</em></label>
-                                                <input maxlength="30" name="keyword" value="{{ request('keyword') }}" type="search" class="form-control" Placeholder="Certificate No." />
+                                                <input maxlength="30" name="keyword" value="" type="search" class="form-control" Placeholder="Certificate No." />
                                                 
                                             </div>
                                             <div class="col-md-12" style="margin-bottom: 20px;">

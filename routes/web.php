@@ -19,5 +19,3 @@ Route::get('/', function () {
 
 
 Route::resource('certificates',CertificateController::class);
-Route::get('certificates-filter',[\App\Http\Controllers\CertificateController::class,'filter'])->name('certificate.filter');
-

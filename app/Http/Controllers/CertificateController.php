@@ -14,8 +14,8 @@ class CertificateController extends Controller
      */
     public function index()
     {
-        $Certificate = Certificate::all();
-        return view('/resources.index', compact('Certificate'));
+        $Certificate = Certificate::latest()->paginate(20);
+        return view('certificates.index', compact('Certificate'))->with('i', (request()->input('page', 1) - 1) * 20);
     }
 
     /**
@@ -25,7 +25,7 @@ class CertificateController extends Controller
      */
     public function create()
     {
-        return view('/resources.create');
+        return view('certificates.create');
     }
 
     /**
@@ -44,8 +44,8 @@ class CertificateController extends Controller
             'description' => 'max:255',
             'status' => 'max:255',
         ]);
-        $Certificate = Certificate::create($storeData);
-        return redirect('/certificates')->with('completed', 'Certificates has been saved!');
+        Certificate::create($request->all());
+        return redirect()->route('certificates.index')->with('success','Created Successfully.');
     }
 
     /**
@@ -54,7 +54,7 @@ class CertificateController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
         //
     }
@@ -65,10 +65,9 @@ class CertificateController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Certificate $Certificate)
     {
-        $Certificate = Certificate::findOrFail($id);
-        return view('/resources.edit', compact('Certificate'));
+        return view('certificates.edit', compact('Certificate'));
     }
 
     /**
@@ -78,7 +77,7 @@ class CertificateController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Certificate $Certificate)
     {
         $updateData = $request->validate([
             'name' => 'required|max:255',
@@ -88,8 +87,9 @@ class CertificateController extends Controller
             'description' => 'max:255',
             'status' => 'max:255',
         ]);
-        Certificate::whereId($id)->update($updateData);
-        return redirect('/certificates')->with('completed', 'Certificates has been updated');
+
+        $Certificate->update($request->all());
+        return redirect()->route('certificates.index')->with('success','Updated Successfully.');
     }
 
     /**
@@ -98,32 +98,9 @@ class CertificateController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Certificate $Certificate)
     {
-        $Certificate = Certificate::findOrFail($id);
         $Certificate->delete();
-        return redirect('/certificates')->with('completed', 'Certificates has been deleted');
-    }
-
-    public function filter(Request  $request)
-    {
-        $Certificate = Certificate::query();
-
-        $name = $request->name;
-        $number = $request->number;
-
-        if ($name) {
-            $users->where('name','LIKE','%'.$name.'%');
-        }
-        if ($number) {
-            $number->where('number','LIKE','%'.$number.'%');
-        }
-
-        $data = [
-            'name' => $name,
-            'number' => $number,
-            'Certificate' => $Certificate->latest()->simplePaginate(10),
-        ];
-        return view('Certificate',$Certificate);
+        return redirect()->route('stocks.index')->with('success', 'Certificates has been deleted');
     }
 }
