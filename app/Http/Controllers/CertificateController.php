@@ -101,6 +101,6 @@ class CertificateController extends Controller
     public function destroy(Certificate $Certificate)
     {
         $Certificate->delete();
-        return redirect()->route('stocks.index')->with('success', 'Certificates has been deleted');
+        return redirect()->route('certificates.index')->with('success', 'Certificates has been deleted');
     }
 }
