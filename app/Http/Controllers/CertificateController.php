@@ -14,8 +14,11 @@ class CertificateController extends Controller
      */
     public function index()
     {
-        $Certificate = Certificate::latest()->paginate(20);
-        return view('certificates.index', compact('Certificate'))->with('i', (request()->input('page', 1) - 1) * 20);
+        // $Certificate = Certificate::latest()->paginate(20);
+        // return view('certificates.index', compact('Certificate'))->with('i', (request()->input('page', 1) - 1) * 20);
+        return view('certificates.index',[
+            'certificates' => Certificate::latest()->paginate(5)
+        ]);
     }
 
     /**
