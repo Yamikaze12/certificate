@@ -41,7 +41,7 @@
             <form action="{{ route('certificates.destroy', $Certificates->id)}}" method="post" style="display: inline-block">
                 @csrf
                 @method('DELETE')
-                <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+                <button type="submit" onclick="return confirm('Want to Delete Data?')" class="btn btn-block btn-danger">Delete</button>
               </form>
         </td>
         </tr>

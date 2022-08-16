@@ -27,19 +27,39 @@
           <div class="form-group">
               @csrf
               <label for="number">Number</label>
-              <input type="text" class="form-control" name="number"/>
+              <input type="text" class="form-control @error('number') is-invalid @enderror" name="number"/>
+              @error('number')
+              <span class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+              </span>
+          @enderror
           </div>
           <div class="form-group">
               <label for="name">Name</label>
-              <input type="text" class="form-control" name="name"/>
+              <input type="text" class="form-control @error('name') is-invalid @enderror" name="name"/>
+              @error('name')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
           </div>
           <div class="form-group">
               <label for="as">as</label>
-              <input type="text" class="form-control" name="as"/>
+              <input type="text" class="form-control @error('as') is-invalid @enderror" name="as"/>
+              @error('as')
+              <span class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+              </span>
+          @enderror
           </div>
           <div class="form-group">
             <label for="date">Date</label>
-            <input type="date" class="datepicker" name="date"/>
+            <input type="date" class="datepicker @error('date') is-invalid @enderror" name="date"/>
+            @error('date')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
         </div>
           <div class="form-group">
               <label for="description">description</label>
@@ -53,7 +73,7 @@
               <option><span class="text-danger">expired</span></option>
             </select>
           </div>
-          <button type="submit" class="btn btn-block btn-danger">Create</button>
+          <button type="submit" onclick="return confirm('are you sure you want to create data?')" class="btn btn-block btn-danger">Create</button>
           <a class="btn btn-success mt-2" href="{{ route('certificates.index') }}"> Go Back</a>
       </form>
   </div>

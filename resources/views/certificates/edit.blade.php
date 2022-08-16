@@ -55,7 +55,7 @@
               <option><span class="text-danger">expired</span></option>
             </select>
           </div>
-          <button type="submit" class="btn btn-block btn-danger">Update Certificate</button>
+          <button type="submit" onclick="return confirm('are you sure you want to update the data?')" class="btn btn-block btn-danger">Update Certificate</button>
           <a class="btn btn-success mt-2" href="{{ route('certificates.index') }}"> Go Back</a>
       </form>
   </div>
