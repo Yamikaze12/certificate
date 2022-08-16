@@ -15,43 +15,6 @@
         }
 </style>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm" id="Navbar">
-        <div class="container">
-        <a class="navbar-brand" href="#">
-            <img src="/logo.png" width="17%" alt="">
-          </a>
-        </button>
-      
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-              <a class="nav-link text-success" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-                Institute
-              </a>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">Online Courses</a>
-                <a class="dropdown-item" href="#">Synchronous Courses</a>
-                <a class="dropdown-item" href="#">Certificate Verification</a>
-              </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">About</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Contact</a>
-            </li>
-          </ul>
-          <form class="form-inline my-2 my-lg-0">
-            <a class="btn btn-success my-2 my-sm-0" href="/certificates" role="button">Login / Register</a>
-          </form>
-        </div>
-    </div>
-      </nav>
-
 
     <main id="main">
         <section id="about" class="about">
@@ -95,9 +58,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <img src="/certificate_blank.jpg" alt="" width="100%" />
-                    </div>
+
                 </div>
             </div>
         </section>

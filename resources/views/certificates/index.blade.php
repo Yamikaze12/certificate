@@ -48,6 +48,7 @@
         @endforeach
     </tbody>
   </table>
+  {!! $Certificates->links() !!}
 </div>
 </div>
 <div>
