@@ -43,22 +43,28 @@
 	
                                         <div class="row">
                                             <div class="col-md-12 form-group">
-                                                <h3>Unique Certificate Code : *</h3>
+
+                                                <div class="row">
+                                                    <div class="col-md-12 form-group">
+                                               <h3>Unique Certificate Code : *</h3>
                                             </div>
                                             <div class="col-md-12 form-group">
                                                 <label>Certificate No. <em>*</em></label>
-                                                <input maxlength="30" name="keyword" value="" type="search" class="form-control" Placeholder="Certificate No." />
-                                                
+                                                <form action="/certificates/search" method="GET">
+                                                    <input type="number" maxlength="30" name="search" placeholder="Certificate No." maxlength="30" value="{{ old('search') }}"/><br>
+                                                    <button type="submit" class="btn btn-primary" value="search" style="margin-bottom: 20px;>
+                                                        <i class="bi bi-search">search</i>
+                                                    </button>
+                                                </form>
                                             </div>
-                                            <div class="col-md-12" style="margin-bottom: 20px;">
-                                                <a class="btn btn-primary" ><i class="bi bi-search"></i>&nbsp;&nbsp;SEARCH</a>
-                                            </div>
+                                            
+                                        </form>
                                         </div>     
                                     </div>
                             </div>
                         </div>
                     </div>
-
+                   @yield('search')
                 </div>
             </div>
         </section>
