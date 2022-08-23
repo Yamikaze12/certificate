@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Certificate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CertificateController extends Controller
 {
@@ -12,12 +13,17 @@ class CertificateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         // $Certificate = Certificate::latest()->paginate(20);
         // return view('certificates.index', compact('Certificate'))->with('i', (request()->input('page', 1) - 1) * 20);
+       // $Certificate = Certificate::latest();
+        //if(request('search')){
+          //  $Certificate->where('number','like','%' . request('search') . '%');
+       // }
+        
         return view('certificates.index',[
-            'certificates' => Certificate::latest()->paginate(5)
+            'certificates' => Certificate::latest()->paginate(20)
         ]);
     }
 
@@ -57,9 +63,9 @@ class CertificateController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show(Certificate $Certificate)
     {
-        //
+        return view('certificates.show', compact('Certificate'));
     }
 
     /**
@@ -106,4 +112,15 @@ class CertificateController extends Controller
         $Certificate->delete();
         return redirect()->route('certificates.index')->with('success', 'Certificates has been deleted');
     }
+    public function search(Request $request, Certificate $Certificate)
+	{
+		$search = $request->search;
+
+		$Certificate = DB::table('Certificate')
+		->where('number','like',"%".$search."%");
+    		// mengirim data Certificate ke view index
+		return view('index',['Certificate' => $Certificate]);
+ 
+	}
+
 }

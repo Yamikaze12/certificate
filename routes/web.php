@@ -14,8 +14,8 @@ use App\Http\Controllers\CertificateController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
 
-
+Route::get('/certificates/search','Certificate@search');
 Route::resource('certificates',CertificateController::class);
