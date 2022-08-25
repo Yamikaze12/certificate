@@ -10,20 +10,23 @@
 </head>
 <style>
     body {
-            min-height: 75rem;
-            padding-top: 4.5rem;
-        }
+    font-family: "Open Sans", sans-serif;
+    color: #444444;
+    }
+    footer {
+    color: #37423b;
+    font-size: 14px;
+    background: #eef0ef;
+    }
 </style>
 <body>
 
     <main id="main">
         <section id="about" class="about">
             <div class="container" data-aos="fade-up">
-                <div class="section-title">
-                    <p class="text-muted">VERIFICATION</p> <hr width="15px">
-
-                    <h1><strong>CERTIFICATE VERIFICATION</strong></h1>
-
+                <div class="section-title" style="margin-bottom: 20px;">
+                    <p>VERIFICATION</p>
+                    <h2 class="mt-1"><strong>CERTIFICATE VERIFICATION</strong></h2>
                 </div>
                 <div class="row" data-aos="zoom-in" data-aos-delay="100">
                     <div class="col-md-12" style="margin-bottom: 20px;">
@@ -51,9 +54,9 @@
                                             <div class="col-md-12 form-group">
                                                 <label>Certificate No. <em>*</em></label>
                                                 <form action="/certificates/search" method="GET">
-                                                    <input type="number" maxlength="30" name="search" placeholder="Certificate No." maxlength="30" value="{{ old('search') }}"/><br>
-                                                    <button type="submit" class="btn btn-primary" value="search" style="margin-bottom: 20px;>
-                                                        <i class="bi bi-search">search</i>
+                                                    <input type="text" maxlength="30" name="search" placeholder="Certificate No." class="form-control" value="{{ old('search') }}"/><br>
+                                                    <button type="submit" class="btn btn-primary" value="search" style="margin-bottom: 20px;">
+                                                        <i class="bi bi-search"></i>&nbsp;&nbsp;SEARCH
                                                     </button>
                                                 </form>
                                             </div>
@@ -70,7 +73,7 @@
         </section>
     </main>
 
-    <footer class="w-100 py-4 flex-shrink-0 bg-light">
+    <footer class="w-100 py-4 mt-5 flex-shrink-0 bg-light">
         <div class="container py-4 ">
             <div class="row gy-4 gx-5">
                 <div class="col-md-3">
@@ -98,7 +101,7 @@
             </div>
         </div>
         
-        <div class="w-100 mt-5 border-top py-5">
+        <div class="w-100 mt-5 border-top py-4">
             <div class="container">
                 <div class="row">
           <div class="col-md-6 col-lg-8">
@@ -123,17 +126,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
-<script src="/navonscroll.js"></script>
-<script>
-     hide_on_scroll({
-        nav_id : 'Navbar',// you must specify this for plugin to work
-        nav_offset           : 200,     // after how much y-scroll, nav should hide onscroll down
-        nav_position         : 'top',   // you want to see nav bar at 'top' or 'bottom', default 'top'
-        hide_onscroll_mobile : false,   // disables hide-onscroll for mobile, you can set it to true
-        mobile_width         : 576      // viewport width below which it disables hide-onscroll if above is false
-
-        });
-</script>
 
 </body>
 </html>
