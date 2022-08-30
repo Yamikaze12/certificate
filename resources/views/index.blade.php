@@ -7,6 +7,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
 </head>
 <style>
     body {
@@ -43,33 +44,32 @@
                         <div class="card">
                             <div class="card-body">
                                 <div id="ContentPlaceHolder1_UpdatePanel_search">
-	
                                         <div class="row">
                                             <div class="col-md-12 form-group">
-
                                                 <div class="row">
                                                     <div class="col-md-12 form-group">
                                                <h3>Unique Certificate Code : *</h3>
                                             </div>
                                             <div class="col-md-12 form-group">
                                                 <label>Certificate No. <em>*</em></label>
-                                                <form action="/certificates/search" method="GET">
-                                                    <input type="text" maxlength="30" name="search" placeholder="Certificate No." class="form-control" value="{{ old('search') }}"/><br>
-                                                    <button type="submit" class="btn btn-primary" value="search" style="margin-bottom: 20px;">
+                                                <form action="{{ route('index') }}" method="GET" role="search">
+                                                    <input type="text" maxlength="30"  id="input" name="search" placeholder="Certificate No." class="form-control" value="{{ request('search') }}"/><br>
+                                                    <button type="submit" class="btn btn-primary" value="search" id="show" style="margin-bottom: 20px;">
                                                         <i class="bi bi-search"></i>&nbsp;&nbsp;SEARCH
                                                     </button>
                                                 </form>
                                             </div>
-                                            
+                                           
                                         </form>
                                         </div>     
                                     </div>
                             </div>
                         </div>
                     </div>
-                   @yield('search')
+                    
                 </div>
             </div>
+            @include('view')
         </section>
     </main>
 
@@ -126,6 +126,36 @@
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script> 
+<script>
+    $(document).ready(function(){
+        readData();
+        $('#input').keyup(function(){
+            var strcari = $('#input').val();
+            if(strcari != ""){
+                $("#read").html('<center>tunngu</center>')
+                $.ajax({
+                    type:"get",
+                    url:"{{ url('search') }}",
+                    data: "number=" + strcari,
+                    success: function(data){
+                        $("#read").html(data);
+                    }
+                });
+            } else{
+                readData();
+            }
+        });
+    });
 
+    function readData(){
+        $.get("{{ url('read') }}",{}, 
+        function(data,status){
+            $("#read").html(data);
+        });
+    }
+</script>
 </body>
 </html>

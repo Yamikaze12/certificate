@@ -13,18 +13,18 @@ class CertificateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request, Certificate $Certificate)
     {
         // $Certificate = Certificate::latest()->paginate(20);
         // return view('certificates.index', compact('Certificate'))->with('i', (request()->input('page', 1) - 1) * 20);
-       // $Certificate = Certificate::latest();
-        //if(request('search')){
-          //  $Certificate->where('number','like','%' . request('search') . '%');
-       // }
-        
+        // $Certificate = Certificate::latest();
+        // if(request('search')){
+        //    $Certificate->where('number','like','%' . request('search') . '%');
+        // }
         return view('certificates.index',[
             'certificates' => Certificate::latest()->paginate(20)
         ]);
+
     }
 
     /**
@@ -63,9 +63,9 @@ class CertificateController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Certificate $Certificate)
+    public function show()
     {
-        return view('certificates.show', compact('Certificate'));
+        return view('certificates.show');
     }
 
     /**
@@ -114,10 +114,14 @@ class CertificateController extends Controller
     }
     public function search(Request $request, Certificate $Certificate)
 	{
-		$search = $request->search;
-
-		$Certificate = DB::table('Certificate')
-		->where('number','like',"%".$search."%");
+        $Certificate = Certificate::where([
+            ['number', '!=', NULL],
+            [function ($query) use ($request) {
+                if (($search = $request->search)) {
+                    $query->orWhere('number', 'like', '%' . $search . '%');
+                }
+            }]
+        ]);
     		// mengirim data Certificate ke view index
 		return view('index',['Certificate' => $Certificate]);
  
