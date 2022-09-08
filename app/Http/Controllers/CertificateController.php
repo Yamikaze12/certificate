@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Certificate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Spatie\Searchable\Search;
 
 class CertificateController extends Controller
 {
@@ -15,12 +16,7 @@ class CertificateController extends Controller
      */
     public function index(Request $request, Certificate $Certificate)
     {
-        // $Certificate = Certificate::latest()->paginate(20);
-        // return view('certificates.index', compact('Certificate'))->with('i', (request()->input('page', 1) - 1) * 20);
-        // $Certificate = Certificate::latest();
-        // if(request('search')){
-        //    $Certificate->where('number','like','%' . request('search') . '%');
-        // }
+        
         return view('certificates.index',[
             'certificates' => Certificate::latest()->paginate(20)
         ]);
@@ -112,19 +108,20 @@ class CertificateController extends Controller
         $Certificate->delete();
         return redirect()->route('certificates.index')->with('success', 'Certificates has been deleted');
     }
-    public function search(Request $request, Certificate $Certificate)
-	{
-        $Certificate = Certificate::where([
-            ['number', '!=', NULL],
-            [function ($query) use ($request) {
-                if (($search = $request->search)) {
-                    $query->orWhere('number', 'like', '%' . $search . '%');
-                }
-            }]
-        ]);
-    		// mengirim data Certificate ke view index
-		return view('index',['Certificate' => $Certificate]);
+    // public function search(Request $request, Certificate $Certificate)
+	// {
+    //     $Certificate = Certificate::where([
+    //         ['number', '!=', NULL],
+    //         [function ($query) use ($request) {
+    //             if (($search = $request->search)) {
+    //                 $query->orWhere('number', 'like', '%' . $search . '%');
+    //             }
+    //         }]
+    //     ]);
+    // 		// mengirim data Certificate ke view index
+	// 	return view('index',['Certificate' => $Certificate]);
  
-	}
+	// }
+    
 
 }

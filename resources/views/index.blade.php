@@ -53,10 +53,13 @@
                                             <div class="col-md-12 form-group">
                                                 <label>Certificate No. <em>*</em></label>
                                                 <form action="{{ route('index') }}" method="GET" role="search">
-                                                    <input type="text" maxlength="30"  id="input" name="search" placeholder="Certificate No." class="form-control" value="{{ request('search') }}"/><br>
-                                                    <button type="submit" class="btn btn-primary" value="search" id="show" style="margin-bottom: 20px;">
+                                                {{-- <form action="/index/search" method="GET" role="search"> --}}
+                                                    <input type="search" maxlength="30" name="search" id="search" placeholder="Certificate No." class="form-control" value="{{ request('index') }}" /><br>
+                                                  
+                                                    <button type="submit" class="btn btn-primary" value="search" style="margin-bottom: 20px;">
                                                         <i class="bi bi-search"></i>&nbsp;&nbsp;SEARCH
                                                     </button>
+                                                  
                                                 </form>
                                             </div>
                                            
@@ -69,7 +72,7 @@
                     
                 </div>
             </div>
-            @include('view')
+            @include('search')
         </section>
     </main>
 
@@ -129,33 +132,5 @@
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script> 
-<script>
-    $(document).ready(function(){
-        readData();
-        $('#input').keyup(function(){
-            var strcari = $('#input').val();
-            if(strcari != ""){
-                $("#read").html('<center>tunngu</center>')
-                $.ajax({
-                    type:"get",
-                    url:"{{ url('search') }}",
-                    data: "number=" + strcari,
-                    success: function(data){
-                        $("#read").html(data);
-                    }
-                });
-            } else{
-                readData();
-            }
-        });
-    });
-
-    function readData(){
-        $.get("{{ url('read') }}",{}, 
-        function(data,status){
-            $("#read").html(data);
-        });
-    }
-</script>
 </body>
 </html>

@@ -16,11 +16,11 @@ use App\Http\Controllers\HomeController;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('index');
-Route::get('/index/read', [HomeController::class, 'read'])->name('read');
-Route::get('/index/search', [HomeController::class, 'search'])->name('search');
+Route::get('/search', [HomeController::class, 'search'])->name('search');
+
 // Route::get('/index', '\App\Http\Controllers\CertificateController@index')->name('index');
 // Route::get('/update/{id}', '\App\Http\Controllers\CertificateController@edit')->name('edit');
 // Route::post('/update/{id}', '\App\Http\Controllers\CertificateController@update')->name('update');
 // Route::get('/delete/{id}', '\App\Http\Controllers\CertificateController@destroy')->name('delete');
 // Route::get('/search/{id}', '\App\Http\Controllers\CertificateController@search')->name('search');
-Route::resource('certificates',CertificateController::class, ['certificates' => ['show', 'edit','delete','search']]);
+Route::resource('certificates',CertificateController::class);

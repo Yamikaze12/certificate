@@ -11,9 +11,22 @@
                 <div class="card-header">
                     Certificate
                     <a class="btn btn-success" href="{{ route('certificates.create') }}"> Add Certificate</a>
+                    
                 </div>
 
                 <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <form action="{{ route('certificates.index') }}" method="GET">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="search" name="search" value="{{ old('search') }}">
+                                    
+                                      <button class="btn btn-outline-secondary" type="submit">Search</button>
+                                    </div>
+                                  
+                            </form>
+                        </div>
+                    </div>
                     <table class="table">
                         <thead>
                             <tr class="table-warning">
