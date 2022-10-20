@@ -72,7 +72,8 @@
                     
                 </div>
             </div>
-            @include('search')
+            <!-- @include('search') -->
+            @yield('search')
         </section>
     </main>
 

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Certificate;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-use Spatie\Searchable\Search;
+
 
 class HomeController extends Controller
 {
@@ -17,7 +17,12 @@ class HomeController extends Controller
         //         $Certificate->where('number', 'LIKE', '%'. $search .'%');
         //     }
 
+        // return view('index', ['Certificate' => $Certificate, 
+        //                     "Certificate" => Certificate::filter(request('search'))->latest()->get()]);
+        $Certificate = Certificate::latest();
         return view('index', ['Certificate' => $Certificate, 
-                            "Certificate" => Certificate::latest()->filter(request('search'))->get()]);
+                                "Certificate" => Certificate::where('number', '=', request('search'))->first()]);                   
     }
+
+
 }
