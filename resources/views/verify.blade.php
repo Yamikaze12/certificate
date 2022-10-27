@@ -52,11 +52,20 @@
                                             </div>
                                             <div class="col-md-12 form-group">
                                                 <label>Certificate No. <em>*</em></label>
-                                                <form action="{{ route('index') }}" method="GET" role="search">
-                                                {{-- <form action="/index/search" method="GET" role="search"> --}}
-                                                    <input type="search" maxlength="30" name="search" id="search" placeholder="Certificate No." class="form-control" value="{{ request('index') }}" /><br>
-                                                  
-                                                    <button type="submit" class="btn btn-primary" value="search" style="margin-bottom: 20px;">
+                                                <form 
+                                                  method="GET"
+                                                  >
+                                                    <input 
+                                                      type="text" 
+                                                      maxlength="30" 
+                                                      name="search" 
+                                                      id="search" 
+                                                      placeholder="Certificate No." 
+                                                      class="form-control" 
+                                                      
+                                                    />
+                                                      <br>
+                                                    <button type="submit" class="btn btn-primary" value="VERIFY" style="margin-bottom: 20px;">
                                                         <i class="bi bi-search"></i>&nbsp;&nbsp;SEARCH
                                                     </button>
                                                   
@@ -72,8 +81,25 @@
                     
                 </div>
             </div>
-            <!-- @include('search') -->
-            @yield('search')
+            <div class="col-md-6">
+              <div class="card">
+                @isset($certificates)
+                <div class="card-body"> 
+                @if($certificates->count() < 1)
+                  <h3>The Certificate ID You Entered is Invalid</h3>
+                @endif
+                @foreach ($certificates as $certificate)
+                  <h3>Certificate ID:&nbsp;{{ $certificate->number }}</h3>
+                  <h3>Student Name:&nbsp;{{ $certificate->name }}</h3>
+                  <h3>Date:&nbsp;{{ $certificate->date}}</h3>
+                  <h3>AS:&nbsp;{{ $certificate->as }}</h3>
+                  <h3>Description:&nbsp;{{ $certificate->description }}</h3>
+                  <h3>Status:&nbsp;{{ $certificate->status }}</h3>
+                @endforeach
+                </div>
+                @endisset
+            </div>
+        </div>
         </section>
     </main>
 

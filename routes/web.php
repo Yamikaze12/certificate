@@ -1,8 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CertificateController;
-use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,13 +14,16 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::get('/', [HomeController::class, 'index'])->name('index');
-// Route::get('/search', [HomeController::class, 'search'])->name('search');
+Route::get('/',[CertificateController::class,'search'])->name('certificate.search');
 
-// Route::get('/index', '\App\Http\Controllers\CertificateController@index')->name('index');
-// Route::get('/update/{id}', '\App\Http\Controllers\CertificateController@edit')->name('edit');
-// Route::post('/update/{id}', '\App\Http\Controllers\CertificateController@update')->name('update');
-// Route::get('/delete/{id}', '\App\Http\Controllers\CertificateController@destroy')->name('delete');
-// Route::get('/search/{id}', '\App\Http\Controllers\CertificateController@search')->name('search');
+Route::get('/add-certificate',[CertificateController::class,'addCertificate']);
+Route::post('/add-certificate',[CertificateController::class,'createCertificate'])->name('certificate.create');
+Route::get('/delete-certificate/{id}',[CertificateController::class,'deleteCertificate']);
+Route::get('/admin-search',[CertificateController::class,'adminSearch'])->name('certificate.adminSearch');
+Route::get('/edit-certificate/{id}',[CertificateController::class,'editCertificate']);
+Route::post('/update-certificate',[CertificateController::class,'updateCertificate'])->name('certificate.update');
+Route::get('/admin', [CertificateController::class,'getCertificate']);
 
-Route::resource('certificates',CertificateController::class);
+Route::get('/imports-exports', [CertificateController::class,'importExportView']);
+Route::get('/export', [CertificateController::class, 'export'])->name('export');
+Route::post('import', [CertificateController::class, 'import'])->name('import');

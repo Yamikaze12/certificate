@@ -3,125 +3,94 @@
 namespace App\Http\Controllers;
 
 use App\Models\Certificate;
+use App\Models\Courses;
+use App\Exports\CertificateExport;
+use App\Imports\CertificateImport;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Spatie\Searchable\Search;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CertificateController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request, Certificate $Certificate)
+    public function addCertificate()
     {
-        
-        return view('certificates.index',[
-            'certificates' => Certificate::latest()->paginate(20)
-        ]);
-
+        return view('add-certificate');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function createCertificate(Request $request)
     {
-        return view('certificates.create');
+        $certificate = new certificate();
+        $certificate->number = $request->number;
+        $certificate->name =$request->name;
+        $certificate->as = $request->as;
+        $certificate->date = $request->date;
+        $certificate->description = $request->description;
+        $certificate->status = $request->status;
+        $certificate->save();
+        return redirect('/add-certificate');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function getCertificate()
     {
-        $storeData = $request->validate([
-            'name' => 'required|max:255',
-            'as' => 'required|max:255',
-            'number' => 'required|numeric',
-            'date' => 'required|max:255',
-            'description' => 'max:255',
-            'status' => 'max:255',
-        ]);
-        Certificate::create($request->all());
-        return redirect()->route('certificates.index')->with('success','Created Successfully.');
+        $certificates = Certificate::orderBy('id','DESC')->paginate(20);
+        return view('certificates',compact('certificates'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show()
+    public function deleteCertificate($id)
     {
-        return view('certificates.show');
+        Certificate::where('id',$id)->delete();
+        return back()->with('Certificate_Deleted','Certificate details has been deleted successfully');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Certificate $Certificate)
+    public function editCertificate($id)
     {
-        return view('certificates.edit', compact('Certificate'));
+        $certificate = Certificate::find($id);
+        return view('edit-certificate',compact('certificate'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Certificate $Certificate)
+    public function updateCertificate(Request $request)
     {
-        $updateData = $request->validate([
-            'name' => 'required|max:255',
-            'as' => 'required|max:255',
-            'number' => 'required|numeric',
-            'date' => 'required|max:255',
-            'description' => 'max:255',
-            'status' => 'max:255',
-        ]);
-
-        $Certificate->update($request->all());
-        return redirect()->route('certificates.index')->with('success','Updated Successfully.');
+        $certificate = Certificate::find($request->id);
+            $certificate->number = $request->number;
+            $certificate->name =$request->name;
+            $certificate->as = $request->as;
+            $certificate->date = $request->date;
+            $certificate->description = $request->description;
+            $certificate->status = $request->status;
+            $certificate->save();
+            return redirect('/admin');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Certificate $Certificate)
+    public function adminSearch(Request $request)
     {
-        $Certificate->delete();
-        return redirect()->route('certificates.index')->with('success', 'Certificates has been deleted');
+        $certificates = Certificate::where('number','=',($request->search))->orWhere('name','=',($request->search)) ->paginate(10);
+        return view('certificates',compact('certificates'));
     }
-    // public function search(Request $request, Certificate $Certificate)
-	// {
-    //     $Certificate = Certificate::where([
-    //         ['number', '!=', NULL],
-    //         [function ($query) use ($request) {
-    //             if (($search = $request->search)) {
-    //                 $query->orWhere('number', 'like', '%' . $search . '%');
-    //             }
-    //         }]
-    //     ]);
-    // 		// mengirim data Certificate ke view index
-	// 	return view('index',['Certificate' => $Certificate]);
- 
-	// }
+
+    public function search(Request $request)
+    {
+        if ($request->search == null) {
+            return view('/verify');
+        }
+        $certificate = Certificate::join('courses', 'certificates.number', '=', 'certificates.number')->where('number','=',($request->search))->paginate(1);
+        return view('verify',['certificates'=>$certificate]);
+    }
+
     
+
+    public function importExportView()
+    {
+       return view('imports-exports');
+    }
+
+    public function export() 
+    {
+        return Excel::download(new CertificateExport, 'certificates.xlsx');
+    }
+
+    public function import()
+    {
+        Excel::import(new CertificateImport,request()->file('file'));
+        return redirect ('/admin');
+    }
 
 }
