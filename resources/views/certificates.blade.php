@@ -37,6 +37,7 @@
                                     <th>Date</th>
                                     <th>Status</th>
                                     <th>Description</th>
+                                    <th>barcode</th>
                                     <th class="text-center">Action</th>
                                     </tr>
                                 </thead>
@@ -50,6 +51,7 @@
                                             <td>{{ $certificate->date }}</td>
                                             <td>{{ $certificate->status }}</td>
                                             <td>{{ $certificate->description }}</td>
+                                            <td>{!! DNS2D::getBarcodeHTML("http://127.0.0.1:8000/?search=$certificate->number", 'QRCODE') !!}</td>
                                             <td>
                                                 <a href="/delete-certificate/{{ $certificate->id }}" class="btn btn-danger">Delete</a>
                                                 <a href="/edit-certificate/{{ $certificate->id }}" class="btn btn-success">Edit</a>
